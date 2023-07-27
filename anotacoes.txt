@@ -1,0 +1,306 @@
+install xampp
+
+install composer
+
+install sqlyog
+
+visual code laravel extension pack
+
+///
+
+comandos de linha
+
+composer create-project laravel/laravel iot-projeto
+
+composer create-project laravel/laravel iot-api
+
+add valores na migration
+
+$table->id();
+            $table->integer("capitulo");
+            $table->unsignedBigInteger("livro_id");
+            $table->string("texto");
+            $table->timestamps();
+            $table->foreign("livro_id")->references("id")->on("livros"); //-
+
+
+*internetOfThing
+
+id
+name unique
+description
+creation ??
+temperatureAir
+humidityAir
+humidityGround
+ledOn
+ledOff
+ledWarning
+timestamp
+actived
+
+*behavior
+
+id
+communicationTime
+timestamp
+
+php artisan serve
+
+php artisan make:model InternetOfThing --migration
+
+php artisan make:model Behavior --migration
+
+//
+
+php artisan make:model PaymentType --migration
+
+///
+
+series
+
+livros
+
+capitulos
+
+///
+
+projeto
+
+
+series
+
+id: int
+
+nome: varchar(30)
+
+......
+
+livros
+
+id: int
+nome: varchar(50)
+abreviacao: varchar(3)
+serie_id: int
+
+.......
+
+capitulos
+
+id: int
+capitulo: int
+texto: text
+livro_id: int
+
+////
+
+com projeto aberto laravel
+
+arquivo env
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=livraria
+DB_USERNAME=root
+DB_PASSWORD=
+
+///
+
+criar banco exemplo XAMPP
+
+livraria  utf8 general
+
+
+///
+Com esses comando na pasta models ele cria os modelos
+
+//models singular serie
+
+//tabelas no plural  series
+
+php artisan make:model Serie --migration
+
+php artisan make:model Livro --migration
+
+php artisan make:model Capitulo --migration
+
+
+acessando pasta database migrations
+a migration vai estar criada 
+
+///
+
+
+apos criar todas os ATRIBUTOS NAS MIGRATIONS
+OS RELACIONAMENTOS ....
+
+RODAR COMANDO:
+
+php artisan migrate
+
+
+///
+
+
+testar
+
+https://lastminuteengineers.com/esp8266-ntp-server-date-time-tutorial/
+
+///
+
+CRIANDO CONTROLLERS
+
+php artisan make:controller SerieController --api  //porq estamos //trabalhando com o geração da api
+
+php artisan make:controller LivroController --api
+
+php artisan make:controller CapituloController --api
+
+
+/////
+
+https://randomnerdtutorials.com/esp8266-nodemcu-date-time-ntp-client-server-arduino/
+
+
+
+///
+
+PARA LSITAR TODAS OS ENDPOINTS DISPONIVEIS DENTRO DA APLICAÇÃO COMO O SWAGGER NO JAVA
+
+php artisan route:list
+
+///
+
+ADD AUTHENTICATION SANCTUM
+
+caso a versao seja antiga do laravel pode se instalar com o comando
+
+composer require laravel/sanctum
+
+verificar se ele existem no composer.json 
+
+exemplo atual: require: laravel/sanctum: 2.14
+
+
+CASO JÁ TENHA INSTALADO RODAR COMANDO:
+
+php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
+
+php artisan migrate
+
+///
+
+criando controler para usuario autenticar
+
+php artisan make:controller AuthController
+
+///
+
+
+UPLOAD DE IMAGENS
+
+ADD IMAGENS NOS LIVROS
+
+
+//no final passa a instrução em qual tabela vai aplicar a alteração
+php artisan make:migration add_imagem_on_livros --table=livros
+
+add os novos atributos para a migration criada
+
+  public function up()
+    {
+        Schema::table('livros', function (Blueprint $table) {
+            $table->string("capa");
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('livros', function (Blueprint $table) {
+            $table->dropColumn("capa");
+        });
+    }
+
+
+e os respectivos definição de coluna String 
+
+e o dropColumn para a mesma
+
+
+DEPOIS DE CRIAR A MIGRATION ADD CAMPOS OU NOVAS TABELAS
+
+RODAR:
+
+php artisan migrate
+
+
+///
+
+
+quando for fazer upload usar no insomnia o multipart form
+PUT  
+multipart
+_method PUT
+
+///
+
+FILESYSTEM FILES - DENTRO DE CONFIG
+
+'disks' = [
+ 
+*amazon
+
+*local
+
+*public
+
+]
+
+///
+
+DEIXAR A PASTA PUBLIC UM LINK PARA O LOCAL DE ARMAZENAMENTO SISTEMA A DO STORAGE PUBLIC(AONDE ESTÁ SALVANDO AS IMAGENS)
+
+php artisan storage:link
+
+///
+
+PARA INSTALAR DEPENDENCIAS DO LARAVEL QUANDO BAIXA DO GITHUB OU OUTRO REPOSITORIO
+
+RODAR COMANDO:
+
+composer install
+
+///
+
+CRIANDO SEEDERS
+
+php artisan make:seeder IdiomaSeeder
+
+php artisan db:seed
+
+//para rodar um seed expecifico
+php artisan db:seed --class=IdiomaSeeder
+
+
+criando o meu
+
+php artisan make:seeder SerieSeeder
+
+
+public function run() {
+
+  Serie::create(['nome' => 'Marvel']);
+
+  Serie::create(['nome' => 'TMNT']);
+
+}
+
+php artisan db:seed --class=SerieSeeder
+
+////
