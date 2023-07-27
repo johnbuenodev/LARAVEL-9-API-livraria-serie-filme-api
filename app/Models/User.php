@@ -43,22 +43,3 @@ class User extends Authenticatable
     ];
 }
 
-/* model
-
-{
-	"name": "robo1",
-	"email": "robo1@iot-gen.com",
-	"password":"123456",
-	"password_confirmation":"123456",
-	"nameToken":"usuarioLogado"
-}
-
-	"email": "robo2@iot-gen.com",
-	"password":"654321",
-
-    {
-	"email": "robo3@iot-gen.com",
-	"password":"456789"
-}
-
-*/
